@@ -1,0 +1,114 @@
+<form [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="container mt-4">
+  <div class="mb-3">
+    <label for="companyName" class="form-label">Company Name</label>
+    <input
+      type="text"
+      id="companyName"
+      class="form-control"
+      formControlName="companyName"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="companyWebsite" class="form-label">Company Website</label>
+    <input
+      type="url"
+      id="companyWebsite"
+      class="form-control"
+      formControlName="companyWebsite"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="companyDescription" class="form-label"
+      >Company Description</label
+    >
+    <textarea
+      id="companyDescription"
+      class="form-control"
+      formControlName="companyDescription"
+    ></textarea>
+  </div>
+
+  <div formArrayName="positions">
+    <div
+      *ngFor="let position of positions.controls; let i = index"
+      [formGroupName]="i"
+      class="mb-4 p-3 border rounded"
+    >
+      <div class="mb-3">
+        <label for="positionName" class="form-label">Position Name</label>
+        <input
+          type="text"
+          id="positionName"
+          class="form-control"
+          formControlName="positionName"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="positionLevel" class="form-label">Position Level</label>
+        <select
+          id="positionLevel"
+          class="form-select"
+          formControlName="positionLevel"
+        >
+          <option value="junior">Junior</option>
+          <option value="middle">Middle</option>
+          <option value="senior">Senior</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="positionDescription" class="form-label"
+          >Position Description</label
+        >
+        <textarea
+          id="positionDescription"
+          class="form-control"
+          formControlName="positionDescription"
+        ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input
+          type="date"
+          id="startDate"
+          class="form-control"
+          formControlName="startDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input
+          type="date"
+          id="endDate"
+          class="form-control"
+          formControlName="endDate"
+        />
+      </div>
+
+      <div
+        *ngIf="position.errors?.['dateRangeInvalid']"
+        class="text-danger mb-3"
+      >
+        End date must be later than start date.
+      </div>
+
+      <button type="button" class="btn btn-danger" (click)="removePosition(i)">
+        Remove Position
+      </button>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary mb-3 me-2"
+    (click)="addPosition()"
+  >
+    Add Position
+  </button>
+  <button type="submit" class="btn btn-success mb-3">Submit</button>
+</form>
